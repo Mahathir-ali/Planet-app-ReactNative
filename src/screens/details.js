@@ -4,6 +4,7 @@ import {
   StyleSheet,
   ScrollView,
   Pressable,
+  Linking,
 } from "react-native";
 import Text from "../components/text/text";
 import React from "react";
@@ -24,10 +25,17 @@ const PlanetSection = ({ title, value }) => {
   );
 };
 
-export default function Details({ navigation, route }) {
+export default function Details({ route }) {
   const planet = route.params.planet;
-  const { name, description, rotationTime, revolutionTime, radius, avgTemp } =
-    planet;
+  const {
+    name,
+    description,
+    rotationTime,
+    revolutionTime,
+    radius,
+    avgTemp,
+    wikiLink,
+  } = planet;
   console.log(name);
   // console.log("Planet-->", planet);
   // const route = useRoute();
@@ -38,6 +46,9 @@ export default function Details({ navigation, route }) {
   //       return <MercurySVG />;
   //   }
   // };
+  const onPressLink = () => {
+    Linking.openURL(wikiLink);
+  };
   return (
     <SafeAreaView style={styles.container}>
       <PlanetHeader backButton={true} />
@@ -48,7 +59,7 @@ export default function Details({ navigation, route }) {
             {name}
           </Text>
           <Text style={styles.desc}>{description}</Text>
-          <Pressable style={styles.source}>
+          <Pressable onPress={onPressLink} style={styles.source}>
             <Text>Source:</Text>
             <Text style={styles.wiki}>wikiLink</Text>
           </Pressable>
