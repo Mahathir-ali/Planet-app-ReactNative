@@ -1,14 +1,47 @@
-import { View, SafeAreaView, StyleSheet } from "react-native";
+import {
+  View,
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  Pressable,
+} from "react-native";
 import Text from "../components/text/text";
 import React from "react";
 import PlanetHeader from "../components/planet-header";
 import { colors } from "../theme/colors";
 import { spacing } from "../theme/spacing";
+import MercurySVG from "../svg/MercurySVG";
+// import { useRoute } from "@react-navigation/native";
 
-export default function Details() {
+export default function Details({ navigation, route }) {
+  const planet = route.params.planet;
+  const { name, description, wikiLink } = planet;
+  console.log(name);
+  // console.log("Planet-->", planet);
+  // const route = useRoute();
+
+  // const renderImage = (name) => {
+  //   switch (name) {
+  //     case "mercury":
+  //       return <MercurySVG />;
+  //   }
+  // };
   return (
     <SafeAreaView style={styles.container}>
       <PlanetHeader backButton={true} />
+      <ScrollView>
+        {/* <View style={styles.imageView}>{renderImage(name)} </View> */}
+        <View style={styles.detailsView}>
+          <Text preset="h1" style={styles.name}>
+            {name}
+          </Text>
+          <Text style={styles.desc}>{description}</Text>
+          <Pressable style={styles.source}>
+            <Text>Source:</Text>
+            <Text style={styles.wiki}>wikiLink</Text>
+          </Pressable>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -18,5 +51,31 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.black,
     padding: spacing[5],
+  },
+  detailsView: {
+    marginTop: spacing[10],
+    marginHorizontal: spacing[6],
+    alignItems: "center",
+  },
+  name: {
+    textTransform: "uppercase",
+    fontWeight: "700",
+  },
+  desc: {
+    lineHeight: 17,
+    letterSpacing: 0.5,
+    textAlign: "justify",
+    marginTop: spacing[6],
+  },
+  source: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: spacing[5],
+  },
+  wiki: {
+    textDecorationLine: "underline",
+    fontWeight: "bold",
+    letterSpacing: 1,
+    paddingLeft: 6,
   },
 });
