@@ -13,9 +13,21 @@ import { spacing } from "../theme/spacing";
 import MercurySVG from "../svg/MercurySVG";
 // import { useRoute } from "@react-navigation/native";
 
+const PlanetSection = ({ title, value }) => {
+  return (
+    <View style={styles.planetSection}>
+      <Text preset="small" style={{ textTransform: "uppercase" }}>
+        {title}
+      </Text>
+      <Text preset="h3">{value}</Text>
+    </View>
+  );
+};
+
 export default function Details({ navigation, route }) {
   const planet = route.params.planet;
-  const { name, description, wikiLink } = planet;
+  const { name, description, rotationTime, revolutionTime, radius, avgTemp } =
+    planet;
   console.log(name);
   // console.log("Planet-->", planet);
   // const route = useRoute();
@@ -41,6 +53,10 @@ export default function Details({ navigation, route }) {
             <Text style={styles.wiki}>wikiLink</Text>
           </Pressable>
         </View>
+        <PlanetSection title="ROTATION TIME :" value={rotationTime} />
+        <PlanetSection title="REVOLUTION TIME :" value={revolutionTime} />
+        <PlanetSection title="RADIUS :" value={radius} />
+        <PlanetSection title="AVG TEMP :" value={avgTemp} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -71,11 +87,23 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: spacing[5],
+    marginBottom: spacing[10],
   },
   wiki: {
     textDecorationLine: "underline",
     fontWeight: "bold",
     letterSpacing: 1,
     paddingLeft: 6,
+  },
+  planetSection: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: spacing[5],
+    paddingVertical: spacing[4],
+    borderColor: colors.grey,
+    borderWidth: 0.5,
+    marginHorizontal: spacing[6],
+    marginBottom: spacing[4],
   },
 });
